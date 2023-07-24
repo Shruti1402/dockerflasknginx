@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'public_db'
+      MYSQL_USER: 'pubilc'
+      MYSQL_PASSWORD: 'Admin@123'
+      MYSQL_ROOT_PASSWORD: 'Admin@123'
+    ports:
+      - 3306:3306
+    expose:
+      - '3306'
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  web:
+    container_name: web_app
+    build: ./flask
+    command: gunicorn --bind 0.0.0.0:8000 app:app
+    volumes:
+      - ./flask:/usr/src/app/
+    networks:
+      - mynetwork
+    ports:
+      - 8000:8000
+  nginx:
+    container_name: nginx_server
+    build: ./nginx
+    networks:
+      - mynetwork
+    ports:
+      - 80:80
+    depends_on:
+      - web
+volumes:
+ dbdata:
+networks:
+ mynetwork:
+
+
+
