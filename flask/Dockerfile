@@ -21,8 +21,12 @@ RUN pip install -r requirements.txt
 
 COPY . /usr/src/app/
 
+# Copy the SSL certificate and key files into the container
+COPY ./fullchain.pem /etc/letsencrypt/live/shrutione.sculptsoft.xyz/fullchain.pem
+COPY ./privkey.pem /etc/letsencrypt/live/shrutione.sculptsoft.xyz/privkey.pem
+
 COPY . .
 
 EXPOSE 8000
 
-CMD [“gunicorn",”app:app”,”--bind”, “0.0.0.0:8000”]
+CMD [“gunicorn", ”app:app”, ”--bind”, “0.0.0.0:8000”, "--certfile","/etc/letsencrypt/live/shrutione.sculptsoft.xyz/fullchain.pem", "--keyfile", "/etc/letsencrypt/live/shrutione.sculptsoft.xyz/privkey.pem"]

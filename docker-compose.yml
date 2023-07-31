@@ -22,32 +22,39 @@ services:
     build: ./flask
     command: gunicorn --bind 0.0.0.0:8000 app:app
     volumes:
-      - ./flask:/usr/src/app/
+      - ./flask:/usr/src/app/ \
+      - ./etc/letsencrypt/live/shrutione.sculptsoft.xyz:/etc/letsencrypt/live/shrutione.sculptsoft.xyz
+#      - ./nginx/nginx.conf:/etc/nginx/nginx.conf \
+#      - ./etc/letsencrypt/live/shrutitwo.sculptsoft.xyz/fullchain.pem:/etc/letsencrypt/live/shrutitwo.sculptsoft.xyz/fullchain.pem \
+#      - ./etc/letsencrypt/live/shrutitwo.sculptsoft.xyzetc/privkey.pem:/etc/letsencrypt/live/shrutitwo.sculptsoft.xyz/privkey.pem
     networks:
       - mynetwork
     ports:
       - 8000:8000
-  html:
-    container_name: html_page
-    build: ./web
-    volumes:
-      - ./web:/usr/src/app/
-    networks:
-      - mynetwork
-    ports:
-      - 80:80
+#  html:
+#    container_name: html_page
+#    build: ./web
+#    volumes:
+#      - ./web:/usr/src/app/
+#    networks:
+#      - mynetwork
+#    ports:
+#      - 80:80
 
   nginx:
     image: nginx:alpine
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-    ports:
-      - 8001:8001
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf \
+      - ./etc/letsencrypt/live/shrutione.sculptsoft.xyz/fullchain.pem:/etc/letsencrypt/live/shrutione.sculptsoft.xyz/fullchain.pem \
+      - ./etc/letsencrypt/live/shrutione.sculptsoft.xyzetc/privkey.pem:/etc/letsencrypt/live/shrutione.sculptsoft.xyz/privkey.pem
+#    ports:
+#      - 80:80
+#      - 443:443
     networks:
       - mynetwork
     depends_on:
       - web
-      - html
+#      - html
 
   #nginx:
   #  container_name: nginx_server
