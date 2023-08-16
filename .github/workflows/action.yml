@@ -11,29 +11,42 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v3
-      - name: Set up Python 3.7
-        uses: actions/setup-python@v2
+
+      - name: Build and push Docker image
+        uses: azure/docker-login@v1
         with:
-          python-version: 3.7
-      - name: Install dependencies
+          login-server: https://hub.docker.com/repository/docker/shruti1402/flaskapp
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
         run: |
+          cd flask
+          docker build -t my-flask-app-new .
+          docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
+          docker push shruti1402/my-flask-app-new:latest
+      
+     # - name: Set up Python 3.7
+     #   uses: actions/setup-python@v2
+     #   with:
+     #     python-version: 3.7
+     # - name: Install dependencies
+     #   run: |
            # cd /flask
-            ls
-            cd flask 
-            pip install --upgrade pip
-            python -m pip install --upgrade pip 
-            pip install --no-cache-dir -r requirements.txt
-      - name: Configure AWS 
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Build Application and Run unit Test
-        run: |
-            ls
-            cd flask
-            python app.py
+     #       ls
+     #       cd flask 
+     #       pip install --upgrade pip
+     #       python -m pip install --upgrade pip 
+     #       pip install --no-cache-dir -r requirements.txt
+     # - name: Configure AWS 
+     #   uses: aws-actions/configure-aws-credentials@v1
+     #   with:
+     #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+     #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+     #     aws-region: us-east-1
+     # - name: Build Application and Run unit Test
+     #   run: |
+     #       ls
+     #       cd flask
+     #       python app.py
 
   deploy:
     name: Deploy to EC2 on master branch push
