@@ -33,7 +33,7 @@ jobs:
           docker push shruti1402/my-flask-app-new:latest
 
       - name: Pull docker images
-        uses: docker/ssh-action@master
+        uses: appleboy/ssh-action@master
         with:
           script: |
             docker login
