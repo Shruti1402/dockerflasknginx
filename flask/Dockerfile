@@ -30,4 +30,4 @@ COPY . .
 EXPOSE 8000
 
 #CMD [“gunicorn", ”app:app”, ”--bind”, “0.0.0.0:8000”, "--certfile","/etc/letsencrypt/live/shrutione.sculptsoft.xyz/fullchain.pem", "--keyfile", "/etc/letsencrypt/live/shrutione.sculptsoft.xyz/privkey.pem"]
-CMD [“gunicorn", ”app:app”, ”--bind”, “0.0.0.0:8000”]
+CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:8000"]
