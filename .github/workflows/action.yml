@@ -19,6 +19,7 @@ jobs:
         run: |
            # cd /flask
             ls
+            cd flask 
             pip install --upgrade pip
             python -m pip install --upgrade pip 
             pip install --no-cache-dir -r requirements.txt
