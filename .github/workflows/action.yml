@@ -17,10 +17,10 @@ jobs:
           python-version: 3.7
       - name: Install dependencies
         run: |
-            cd /flask
+           # cd /flask
             pip install --upgrade pip
             python -m pip install --upgrade pip 
-            pip install -r requirements.txt
+             pip install --no-cache-dir -r requirements.txt
       - name: Configure AWS 
         uses: aws-actions/configure-aws-credentials@v1
         with:
