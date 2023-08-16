@@ -75,8 +75,8 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
 
-      - name: Run image on EC2 
-        run:  ssh ${{ secrets.USERNAME }}@52.73.82.30 "docker run my-flask-app-new"
+      #- name: Run image on EC2 
+       # run:  ssh ${{ secrets.USERNAME }}@52.73.82.30 "docker run my-flask-app-new"
   
       #run: |
        # ssh -i ${{ secrets.YOUR_PRIVATE_KEY }} ec2-user@52.73.82.30 "bash -s" < deploy.sh
