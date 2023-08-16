@@ -32,7 +32,7 @@ jobs:
           docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
           docker push shruti1402/my-flask-app-new:latest
 
-      - name: Pull docker image
+      - name: Pull docker images
         run: docker pull shruti1402/my-flask-app-new
       
      # - name: Set up Python 3.7
