@@ -70,7 +70,7 @@ jobs:
      #       python app.py
 
   deploy:
-    name: Deploy to EC2 on master branch push
+    name: Deploy to EC2 on master branc push
     runs-on: ubuntu-latest
 
     steps:
