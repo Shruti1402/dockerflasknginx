@@ -33,7 +33,7 @@ jobs:
           docker push shruti1402/my-flask-app-new:latest
 
       - name: Pull docker image
-        run: docker pull shruti1402/my-flask-app-new:tagname
+        run: docker pull shruti1402/my-flask-app-new
       
      # - name: Set up Python 3.7
      #   uses: actions/setup-python@v2
