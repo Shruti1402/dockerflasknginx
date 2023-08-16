@@ -31,6 +31,7 @@ jobs:
           aws-region: us-east-1
       - name: Build Application and Run unit Test
         run: |
+            cd flask
             python app.py
           
      # - name: Check docker installed or not
