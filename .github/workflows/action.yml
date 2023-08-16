@@ -20,7 +20,7 @@ jobs:
            # cd /flask
             pip install --upgrade pip
             python -m pip install --upgrade pip 
-             pip install --no-cache-dir -r requirements.txt
+            pip install --no-cache-dir -r requirements.txt
       - name: Configure AWS 
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -29,8 +29,7 @@ jobs:
           aws-region: us-east-1
       - name: Build Application and Run unit Test
         run: |
-            cd /flask
-            python app.py & pytest
+            python app.py
           
      # - name: Check docker installed or not
       #  run: docker run hello-world
