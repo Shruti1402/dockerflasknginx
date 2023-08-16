@@ -40,9 +40,9 @@ jobs:
           key:  ${{ secrets.EC2_SSH_KEY }}
           envs: GITHUB_ENV
           script: |
-            docker login
-            docker pull shruti1402/my-flask-app-new
-            #docker run -d --name flask_img -p 8000:8000 shruti1402/my-flask-app-new
+            sudo docker login
+            sudo docker pull shruti1402/my-flask-app-new:latest
+            sudo docker run -d --name flask_img -p 8000:8000 shruti1402/my-flask-app-new
           
       
      # - name: Set up Python 3.7
