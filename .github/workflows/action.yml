@@ -33,10 +33,12 @@ jobs:
           docker push shruti1402/my-flask-app-new:latest
 
       - name: Pull docker images
-        run: |
-          docker login
-          docker pull shruti1402/my-flask-app-new
-          docker run -d --name flask_img -p 8000:8000 shruti1402/my-flask-app-new
+        uses: docker/ssh-action@master
+        with:
+          script: |
+            docker login
+            docker pull shruti1402/my-flask-app-new
+            docker run -d --name flask_img -p 8000:8000 shruti1402/my-flask-app-new
           
       
      # - name: Set up Python 3.7
