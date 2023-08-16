@@ -5,7 +5,7 @@ on:
     branches: ['master']
 
 jobs: 
-  deploy: 
+  build: 
     name: flask application
     runs-on: ubuntu-latest 
     steps:
@@ -34,6 +34,27 @@ jobs:
             ls
             cd flask
             python app.py
+
+  deploy:
+    name: Deploy to EC2 on master branch push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v2
+
+      - name: Deploy to EC2
+        uses: easingthemes/ssh-deploy@main
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
+          REMOTE_HOST: ${{ secrets.HOST_DNS }}
+          REMOTE_USER: ${{ secrets.USERNAME }}
+          TARGET: ${{ secrets.TARGET_DIR }}
+  
+      #run: |
+       # ssh -i ${{ secrets.YOUR_PRIVATE_KEY }} ec2-user@52.73.82.30 "bash -s" < deploy.sh
+       # env:
+        #  DEPLOY_KEY: ${{ secrets.YOUR_PRIVATE_KEY }}
           
      # - name: Check docker installed or not
       #  run: docker run hello-world
