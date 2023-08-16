@@ -85,22 +85,7 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
 
-      #- name: Run image on EC2 
-        #run:  ssh -i ${{ secrets.EC2_SSH_KEY }}  ${{ secrets.USERNAME }}@52.73.82.30 "docker run shruti1402/my-flask-app-new"
-  
-      #run: |
-       # ssh -i ${{ secrets.YOUR_PRIVATE_KEY }} ec2-user@52.73.82.30 "bash -s" < deploy.sh
-       # env:
-        #  DEPLOY_KEY: ${{ secrets.YOUR_PRIVATE_KEY }}
-          
-     # - name: Check docker installed or not
-      #  run: docker run hello-world
-      #- name: Push to docker hub
-       # uses: docker/build-push-action/@v1
-       # with:
-        #  username: ${{secrets.DOCKER_USERNAME}}
-         # password: ${{secrets.DOCKER_PASSWORD}}
-         # tag_with_ref: true
+     
 
    
      
