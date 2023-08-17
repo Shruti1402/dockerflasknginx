@@ -2,7 +2,7 @@ name: Provision t2.micro EC2
 
 on:
   push:
-    branches: ['master']
+    branches: ['main']
   
   #workflow_run:
   #  workflows: 
