@@ -1,0 +1,66 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+#steps:
+#- script: echo Hello, world!
+#  displayName: 'Run a one-line script'
+
+#- script: |
+#    echo Add other tasks to build, test, and deploy your project.
+#    echo See https://aka.ms/yaml
+#  displayName: 'Run a multi-line script'
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildJob
+    steps:
+
+    - script: echo "Building the Docker image..."
+      displayName: 'Building Docker Image'
+    - script: |
+          cd flask 
+          docker build -t flask-app .
+      displayName: 'Build Docker Image'
+      continueOnError: true  # Continue even if the build fails to allow deployment step to run
+    
+    - script: echo "Logging into Docker registry..."
+      displayName: 'Login to Docker Registry'
+    - script: |
+       
+    - script: echo "Pushing Docker image to registry..."
+      displayName: 'Push Docker Image'
+      script: |
+          cd flask
+          docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
+          docker push shruti1402/my-flask-app-new:latest
+      displayName: 'Push Docker Image'
+    
+
+
+
+- stage: Deploy
+  jobs:
+  - deployment: DeployJob
+    environment: 'YourEnvironmentName'  # Define your environment in Azure DevOps
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo "Pulling Docker image to EC2 instance..."
+            displayName: 'Pull image to EC2'
+            script: |
+                sudo docker login
+                sudo docker pull shruti1402/my-flask-app-new:latest
+                sudo docker stop flask_img_new
+                sudo docker rm flask_img_new
+                sudo docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
+  
