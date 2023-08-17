@@ -1,6 +1,8 @@
 name: Provision t2.micro EC2
 
 on:
+  push:
+    branches: ['master']
   workflow_dispatch:
     inputs:
       ec2-name:
