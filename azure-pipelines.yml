@@ -21,20 +21,20 @@ stages:
       displayName: 'Build Docker Image'
       continueOnError: true  # Continue even if the build fails to allow deployment step to run
 
-    - task: Docker@2
-      inputs:
-        command: 'login'
-        containerRegistry: 'dockerRegistryServiceConnection'  # Specify the name of your Docker registry service connection in Azure DevOps
-      displayName: 'Login to Docker Hub'
-      env:
-        DOCKER_USERNAME: $(DOCKER_USERNAME)
-        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+#    - task: Docker@2
+#      inputs:
+#        command: 'login'
+#        containerRegistry: 'dockerRegistryServiceConnection'  # Specify the name of your Docker registry service connection in Azure DevOps
+#      displayName: 'Login to Docker Hub'
+#      env:
+#        DOCKER_USERNAME: $(DOCKER_USERNAME)
+#        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
     
-    - script: |
-        cd flask
-        docker tag my-flask-app shruti1402/my-flask-app:latest
-        docker push shruti1402/my-flask-app:latest
-      displayName: 'Push Docker Image'
+#    - script: |
+#        cd flask
+#        docker tag my-flask-app shruti1402/my-flask-app:latest
+#        docker push shruti1402/my-flask-app:latest
+#      displayName: 'Push Docker Image'
 
 #- stage: Deploy
 #  jobs:
