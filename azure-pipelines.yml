@@ -1,29 +1,16 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - master
 
+pr:
+- '*'
+
 pool:
   vmImage: ubuntu-latest
-
-#steps:
-#- script: echo Hello, world!
-#  displayName: 'Run a one-line script'
-
-#- script: |
-#    echo Add other tasks to build, test, and deploy your project.
-#    echo See https://aka.ms/yaml
-#  displayName: 'Run a multi-line script'
-
 stages:
 - stage: Build
   jobs:
   - job: BuildJob
     steps:
-
     - script: echo "Building the Docker image..."
       displayName: 'Building Docker Image'
     - script: |
@@ -40,10 +27,6 @@ stages:
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-
-#    - script: echo "Logging into Docker registry..."
- #     displayName: 'Login to Docker Registry'
-  #  - script: |
        
     - script: echo "Pushing Docker image to registry..."
       displayName: 'Push Docker Image'
@@ -61,7 +44,7 @@ stages:
 - stage: Deploy
   jobs:
   - deployment: DeployJob
-    environment: 'YourEnvironmentName'  # Define your environment in Azure DevOps
+    environment: EC2_SSH_PRIVATE_KEY: $(AppSecrets.EC2_SSH_PRIVATE_KEY) # Define your environment in Azure DevOps
     strategy:
       runOnce:
         deploy:
@@ -69,7 +52,7 @@ stages:
           - script: echo "Pulling Docker image to EC2 instance..."
             displayName: 'Pull image to EC2'
           - script: |
-                ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 
+               ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 
                 sudo docker login
                 sudo docker pull shruti1402/my-flask-app-new:latest
                 sudo docker stop flask_img_new
@@ -79,7 +62,7 @@ stages:
           env:
             EC2_SSH_PRIVATE_KEY: $(AppSecrets.EC2_SSH_PRIVATE_KEY)
             EC2_INSTANCE_IP: $(AppSecrets.EC2_INSTANCE_IP)
-```
+
 
   #jobs:
   #- job: DeployToEC2
@@ -94,4 +77,3 @@ stages:
     #env:
       #EC2_SSH_PRIVATE_KEY: $(AppSecrets.EC2_SSH_PRIVATE_KEY)
       #EC2_INSTANCE_IP: $(AppSecrets.EC2_INSTANCE_IP)
-```
