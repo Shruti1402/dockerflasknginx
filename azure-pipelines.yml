@@ -21,40 +21,40 @@ stages:
       displayName: 'Build Docker Image'
       continueOnError: true  # Continue even if the build fails to allow deployment step to run
 
-#    - task: Docker@2
-#      inputs:
-#        command: 'login'
-#        containerRegistry: 'dockerRegistryServiceConnection'  # Specify the name of your Docker registry service connection in Azure DevOps
-#      displayName: 'Login to Docker Hub'
-#      env:
-#        DOCKER_USERNAME: $(DOCKER_USERNAME)
-#        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+    - task: Docker@2
+      inputs:
+        command: 'login'
+        containerRegistry: 'dockerRegistryServiceConnection'  # Specify the name of your Docker registry service connection in Azure DevOps
+      displayName: 'Login to Docker Hub'
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
     
-#    - script: |
-#        cd flask
-#        docker tag my-flask-app shruti1402/my-flask-app:latest
-#        docker push shruti1402/my-flask-app:latest
-#      displayName: 'Push Docker Image'
+    - script: |
+        cd flask
+        docker tag my-flask-app shruti1402/my-flask-app:latest
+        docker push shruti1402/my-flask-app:latest
+      displayName: 'Push Docker Image'
 
-#- stage: Deploy
-#  jobs:
-#  - deployment: DeployJob
-#    environment: 'test'  # Define your environment in Azure DevOps
-#    strategy:
-#      runOnce:
-#        deploy:
-#          steps:
-#          - script: echo "Pulling Docker image to EC2 instance..."
-#            displayName: 'Pull image to EC2'
+- stage: Deploy
+  jobs:
+  - deployment: DeployJob
+    environment: 'test'  # Define your environment in Azure DevOps
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo "Pulling Docker image to EC2 instance..."
+            displayName: 'Pull image to EC2'
 
-#          - script: |
-#              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker login"
-#              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker pull shruti1402/my-flask-app:latest"
-#              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker stop my-flask-app"
-#              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker rm my-flask-app"
-#              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker run -d --name my-flask-app -p 8000:8000 shruti1402/my-flask-app"
-#            displayName: 'Deploy to EC2'
-#            env:
-#              EC2_SSH_KEY: $(AppSecrets.EC2_SSH_KEY)
-#              USERNAME: ubuntu
+          - script: |
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker login"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker pull shruti1402/my-flask-app:latest"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker stop my-flask-app"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker rm my-flask-app"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker run -d --name my-flask-app -p 8000:8000 shruti1402/my-flask-app"
+            displayName: 'Deploy to EC2'
+            env:
+              EC2_SSH_KEY: $(AppSecrets.EC2_SSH_KEY)
+              USERNAME: ubuntu
 
