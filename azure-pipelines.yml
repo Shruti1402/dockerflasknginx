@@ -1,24 +1,26 @@
 trigger:
-- master
+- master
 
 pr:
-- '*'
+- "*"
 
 pool:
-  vmImage: ubuntu-latest
+  vmImage: ubuntu-latest
+
 stages:
-- stage: Build
-  jobs:
-  - job: BuildJob
-    steps:
-    - script: echo "Building the Docker image..."
-      displayName: 'Building Docker Image'
-    - script: |
-          cd flask 
-          docker build -t flask-app .
-      displayName: 'Build Docker Image'
-      continueOnError: true  # Continue even if the build fails to allow deployment step to run
-    
+- stage: Build
+  jobs:
+  - job: BuildJob
+    steps:
+    - script: echo "Building the Docker image..."
+      displayName: 'Building Docker Image'
+
+    - script: |
+        cd flask
+        docker build -t my-flask-app .
+      displayName: 'Build Docker Image'
+      continueOnError: true  # Continue even if the build fails to allow deployment step to run
+
     - task: Docker@2
       inputs:
         command: 'login'
@@ -27,53 +29,32 @@ stages:
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-       
-    - script: echo "Pushing Docker image to registry..."
-      displayName: 'Push Docker Image'
-      script: |
-          cd flask
-          docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
-          docker push shruti1402/my-flask-app-new:latest
-      displayName: 'Push Docker Image'
+    
+    - script: |
+        cd flask
+        docker tag my-flask-app shruti1402/my-flask-app:latest
+        docker push shruti1402/my-flask-app:latest
+      displayName: 'Push Docker Image'
 
+- stage: Deploy
+  jobs:
+  - deployment: DeployJob
+    environment: 'YourEnvironmentName'  # Define your environment in Azure DevOps
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - script: echo "Pulling Docker image to EC2 instance..."
+            displayName: 'Pull image to EC2'
 
-    
+          - script: |
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker login"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker pull shruti1402/my-flask-app:latest"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker stop my-flask-app"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker rm my-flask-app"
+              ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 "sudo docker run -d --name my-flask-app -p 8000:8000 shruti1402/my-flask-app"
+            displayName: 'Deploy to EC2'
+            env:
+              EC2_SSH_KEY: $(AppSecrets.EC2_SSH_KEY)
+              USERNAME: ubuntu
 
-
-
-- stage: Deploy
-  jobs:
-  - deployment: DeployJob
-    environment: EC2_SSH_PRIVATE_KEY: $(AppSecrets.EC2_SSH_PRIVATE_KEY) # Define your environment in Azure DevOps
-    strategy:
-      runOnce:
-        deploy:
-          steps:
-          - script: echo "Pulling Docker image to EC2 instance..."
-            displayName: 'Pull image to EC2'
-          - script: |
-               ssh -i $EC2_SSH_KEY $USERNAME@52.73.82.30 
-                sudo docker login
-                sudo docker pull shruti1402/my-flask-app-new:latest
-                sudo docker stop flask_img_new
-                sudo docker rm flask_img_new
-                sudo docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
-          displayName: 'Deploy to EC2'
-          env:
-            EC2_SSH_PRIVATE_KEY: $(AppSecrets.EC2_SSH_PRIVATE_KEY)
-            EC2_INSTANCE_IP: $(AppSecrets.EC2_INSTANCE_IP)
-
-
-  #jobs:
-  #- job: DeployToEC2
-  #  steps:
-  #  - checkout: self
-
-    #- script: |
-      #echo "$EC2_SSH_KEY" > ~/.ssh/id_rsa
-      #chmod 600 ~/.ssh/id_rsa
-      #ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@$EC2_INSTANCE_IP "cd /path/to/your/app && git pull origin master && docker-compose down && docker-compose up -d"
-    #displayName: 'Deploy to EC2'
-    #env:
-      #EC2_SSH_PRIVATE_KEY: $(AppSecrets.EC2_SSH_PRIVATE_KEY)
-      #EC2_INSTANCE_IP: $(AppSecrets.EC2_INSTANCE_IP)
