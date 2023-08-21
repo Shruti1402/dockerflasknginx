@@ -18,12 +18,18 @@ stages:
         containerregistrytype: 'Docker Hub'
         dockerRegistryEndpoint: 'dockerRegistryServiceConnection'
         command: 'Build an image'
-        dockerFile: '/flask/Dockerfile'
+        dockerFile: '**/Dockerfile'
         imageName: '$(ImageName)'
         includeLatestTag: true
         useDefaultContext: false
         buildContext: '.'
-        
+
+    - script: |
+        cd /flask
+        docker build -t my-flask-app .
+      displayName: 'Build Docker Image'
+      continueOnError: true      
+
     - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
