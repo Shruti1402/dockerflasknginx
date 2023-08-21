@@ -27,8 +27,6 @@ stages:
         command: 'Build an image'
         dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
         #imageName: '$(ImageName)'
-        #includeLatestTag: true
-        #useDefaultContext: false
         buildContext: '$(Build.SourcesDirectory)/app.py'
         repository: $(DOCKER_REPOSITORY_NAME)
       env:
@@ -36,20 +34,17 @@ stages:
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
 
   
-    #- script: |
-    #    cd /flask
-    #    docker build -t my-flask-app .
-    #  displayName: 'Build Docker Image'
-    #  continueOnError: true      
-
     - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
         containerregistrytype: 'Docker Hub'
         containerRegistry: 'dockerRegistryServiceConnection'
         command: 'Push an image'
-        imageName: '$(ImageName)'
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        #imageName: '$(ImageName)'
+      #condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
     #steps:
     #- script: echo "Building the Docker image..."
