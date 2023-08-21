@@ -16,7 +16,7 @@ stages:
       displayName: 'Building Docker Image'
 
     - script: |
-        cd flask
+        cd /flask
         docker build -t my-flask-app .
       displayName: 'Build Docker Image'
       continueOnError: true  # Continue even if the build fails to allow deployment step to run
