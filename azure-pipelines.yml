@@ -16,13 +16,16 @@ stages:
       displayName: 'Build the Docker image'
       inputs:
         containerregistrytype: 'Docker Hub'
-        dockerRegistryEndpoint: 'dockerRegistryServiceConnection'
+        containerRegistry: 'dockerRegistryServiceConnection'
         command: 'Build an image'
         dockerFile: '**/Dockerfile'
         imageName: '$(ImageName)'
         includeLatestTag: true
         useDefaultContext: false
         buildContext: '.'
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
 
     - script: |
         cd /flask
@@ -34,10 +37,11 @@ stages:
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
         containerregistrytype: 'Docker Hub'
-        dockerRegistryEndpoint: 'dockerRegistryServiceConnection'
+        containerRegistry: 'dockerRegistryServiceConnection'
         command: 'Push an image'
         imageName: '$(ImageName)'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
+
     #steps:
     #- script: echo "Building the Docker image..."
     #  displayName: 'Building Docker Image'
