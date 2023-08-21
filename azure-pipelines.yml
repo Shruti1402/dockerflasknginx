@@ -19,7 +19,7 @@ stages:
         containerRegistry: 'dockerRegistryServiceConnection'
         command: 'Build an image'
         dockerFile: '$(Build.SourcesDirectory)/Dockerfile'
-        #imageName: '$(ImageName)'
+        imageName: '$(ImageName)'
         #includeLatestTag: true
         #useDefaultContext: false
         buildContext: '$(Build.SourcesDirectory)/app.py'
@@ -28,6 +28,7 @@ stages:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
 
+  
     #- script: |
     #    cd /flask
     #    docker build -t my-flask-app .
