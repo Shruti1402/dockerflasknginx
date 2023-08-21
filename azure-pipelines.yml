@@ -39,12 +39,13 @@ stages:
       inputs:
         containerregistrytype: 'Docker Hub'
         containerRegistry: 'dockerRegistryServiceConnection'
-        command: 'Push an image'
+        command: 'Push  '
+        imageName: '$(ImageName)'
         DOCKER_REPOSITORY_NAME: 'my-flask-app-new'
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-        imageName: '$(ImageName)'
+        
       #condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
 
     #steps:
