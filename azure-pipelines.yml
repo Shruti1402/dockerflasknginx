@@ -15,8 +15,8 @@ stages:
     - task: Docker@1
       displayName: 'Build the Docker image'
       inputs:
-        containerregistrytype: 'dockerRegistryServiceConnection'
-        dockerRegistryEndpoint: 'Docker Hub'
+        containerregistrytype: 'Docker Hub'
+        dockerRegistryEndpoint: 'dockerRegistryServiceConnection'
         command: 'Build an image'
         dockerFile: '**/Dockerfile'
         imageName: '$(ImageName)'
@@ -27,8 +27,8 @@ stages:
     - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
-        containerregistrytype: 'dockerRegistryServiceConnection'
-        dockerRegistryEndpoint: 'Docker Hub'
+        containerregistrytype: 'Docker Hub'
+        dockerRegistryEndpoint: 'dockerRegistryServiceConnection'
         command: 'Push an image'
         imageName: '$(ImageName)'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
