@@ -86,12 +86,15 @@ stages:
     #  displayName: 'Create SSH Key File'
 
     - script: |
-        ssh -o StrictHostKeyChecking=no -i xyz.pem ubuntu@52.73.82.30 'docker login -u shruti1402 -p Shruti@1402'
+        ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
         displayName: 'Login to Docker Hub on EC2'
 
     - script: |
-        #ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker stop my-flask-app-new || true'
-        #ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker rm my-flask-app-new || true'
-        ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker pull shruti1402/my-flask-app-new:latest'
-        ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
+        ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new || true'
+        ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker rm my-flask-app-new || true'
+        ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker pull shruti1402/my-flask-app-new:latest'
+        ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo    docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
       displayName: 'Pull and Run Docker Image on EC2'
+      env:
+        EC2_SSH_KEY: $(AppSecrets.EC2_SSH_KEY)
+        USERNAME: ubuntu	
