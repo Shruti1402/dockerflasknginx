@@ -46,8 +46,7 @@ stages:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
         
-      #condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'))
-
+      
     #steps:
     #- script: echo "Building the Docker image..."
     #  displayName: 'Building Docker Image'
@@ -75,3 +74,24 @@ stages:
 
 
 
+  - job: DeployFlaskAppToEC2
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
+      displayName: 'Use Python 3.x'
+
+    - script: 'echo ${{ EC2_SSH_KEY}} > flask/xyz.pem && chmod 600 xyz.pem'
+      displayName: 'Create SSH Key File'
+
+    - script: |
+        ssh -o StrictHostKeyChecking=no -i xyz.pem ubuntu@52.73.82.30 'docker login -u shruti1402 -p Shruti@1402'
+        displayName: 'Login to Docker Hub on EC2'
+
+    - script: |
+        #ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker stop my-flask-app-new || true'
+        #ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker rm my-flask-app-new || true'
+        ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker pull shruti1402/my-flask-app-new:latest'
+        ssh -o StrictHostKeyChecking=no -i ssh_key.pem ubuntu@52.73.82.30 'docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
+      displayName: 'Pull and Run Docker Image on EC2'
