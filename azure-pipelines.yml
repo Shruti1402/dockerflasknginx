@@ -18,7 +18,7 @@ stages:
         containerregistrytype: 'Docker Hub'
         dockerRegistryEndpoint: 'dockerRegistryServiceConnection'
         command: 'Build an image'
-        dockerFile: '**/Dockerfile'
+        dockerFile: '/flask/Dockerfile'
         imageName: '$(ImageName)'
         includeLatestTag: true
         useDefaultContext: false
