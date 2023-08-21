@@ -16,13 +16,13 @@ stages:
       displayName: 'Build the Docker image'
       inputs:
         #containerregistrytype: 'Docker Hub'
-        #containerRegistry: 'dockerRegistryServiceConnection'
+        containerRegistry: 'dockerRegistryServiceConnection'
         command: 'Build an image'
         dockerFile: '$(Build.SourcesDirectory)/Dockerfile'
         #imageName: '$(ImageName)'
         #includeLatestTag: true
         #useDefaultContext: false
-        buildContext: '$(Build.SourcesDirectory)'
+        buildContext: '$(Build.SourcesDirectory)/app.py'
         repository: $(DOCKER_REPOSITORY_NAME)
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
