@@ -15,23 +15,24 @@ stages:
     - task: Docker@1
       displayName: 'Build the Docker image'
       inputs:
-        containerregistrytype: 'Docker Hub'
-        containerRegistry: 'dockerRegistryServiceConnection'
+        #containerregistrytype: 'Docker Hub'
+        #containerRegistry: 'dockerRegistryServiceConnection'
         command: 'Build an image'
-        dockerFile: '**/Dockerfile'
-        imageName: '$(ImageName)'
-        includeLatestTag: true
-        useDefaultContext: false
-        buildContext: '.'
+        dockerFile: '$(Build.SourcesDirectory)/Dockerfile'
+        #imageName: '$(ImageName)'
+        #includeLatestTag: true
+        #useDefaultContext: false
+        buildContext: '$(Build.SourcesDirectory)'
+        repository: $(DOCKER_REPOSITORY_NAME)
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
 
-    - script: |
-        cd /flask
-        docker build -t my-flask-app .
-      displayName: 'Build Docker Image'
-      continueOnError: true      
+    #- script: |
+    #    cd /flask
+    #    docker build -t my-flask-app .
+    #  displayName: 'Build Docker Image'
+    #  continueOnError: true      
 
     - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub'
