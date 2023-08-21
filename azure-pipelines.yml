@@ -1,16 +1,23 @@
 trigger:
 - master
 
+resource:
+- repo: self 
+
+variables:
+  tag: '$(Build.BuildId)'
+
 pr:
 - "*"
 
-pool:
-  vmImage: ubuntu-latest
 
 stages:
 - stage: Build
   jobs:
   - job: BuildJob
+    pool:
+    vmImage: ubuntu-latest
+
     steps:
     - task: Docker@1
       displayName: 'Build the Docker image'
