@@ -26,8 +26,7 @@ stages:
     - task: Docker@1
       displayName: 'Build the Docker image'
       inputs:
-        containerregistrytype: 'Docker Hub'
-        containerRegistry: 'dockerRegistryServiceConnection'
+        containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Docker Hub'
         command: 'Build an image'
         dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
@@ -43,8 +42,7 @@ stages:
     - task: Docker@1
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
-        containerregistrytype: 'Docker Hub'
-        containerRegistry: 'dockerRegistryServiceConnection'
+        containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Docker Hub'
         command: 'Push an image'
         ImageName: '$(ImageName)'
