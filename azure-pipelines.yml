@@ -42,25 +42,25 @@ stages:
       inputs:
         containerregistrytype: 'Docker Hub'
         containerRegistry: 'dockerRegistryServiceConnection'
-        command: 'Push  '
+        command: 'Push'
         imageName: '$(ImageName)'
         DOCKER_REPOSITORY_NAME: 'my-flask-app-new'
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
         DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
-    - script: |
-        sudo docker login
-        cd /flask
-        docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
-        docker push shruti1402/my-flask-app-new:latest
+    #- script: |
+    #    sudo docker login
+    #    cd /flask
+    #    docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
+    #    docker push shruti1402/my-flask-app-new:latest
         
     - task: CmdLine@2 
       displayName: 'Pull the Docker image from Dockerhub'
       inputs:
         containerregistrytype: 'Docker Hub'
         containerRegistry: 'dockerRegistryServiceConnection'
-        command: 'Pull '
+        command: 'Pull'
         imageName: '$(ImageName)'
         DOCKER_REPOSITORY_NAME: 'my-flask-app-new'
       env:
