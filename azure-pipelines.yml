@@ -85,8 +85,8 @@ stages:
   jobs:
   - job: Deploy
     displayName: Deploy to EC2
-    env:
-      SSH_PRIVATE_KEY: '$(SSH_PRIVATE_KEY)'
+    #env:
+    #  SSH_PRIVATE_KEY: '$(SSH_PRIVATE_KEY)'
     #inputs:  
     #  SSH_PRIVATE_KEY: '$(SSH_PRIVATE_KEY)'
     steps:
