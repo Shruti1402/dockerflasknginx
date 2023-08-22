@@ -5,7 +5,7 @@ resources:
 - repo: self 
 
 variables:
-  ImageName: 'shruti1402/my-flask-app-new$(Build.BuildId)'
+  ImageName: 'shruti1402/my-flask-app-new175'
 #variables:
 #  tag: '$(Build.BuildId)'
 
