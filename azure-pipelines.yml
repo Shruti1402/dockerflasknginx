@@ -86,7 +86,7 @@ stages:
 
     - script: |
         cd ~
-        cd ..
+        cd ../..
         ls 
         pwd
         ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
@@ -98,4 +98,4 @@ stages:
       env:
         EC2_SSH_KEY: $(New variable group.EC2_SSH_KEY)
         USERNAME: ubuntu
-        HOST: $(HOST_DNS)
+        HOST_DNS: $(HOST_DNS)
