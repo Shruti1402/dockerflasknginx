@@ -82,8 +82,10 @@ stages:
         addToPath: true
       displayName: 'Use Python 3.x'
 
-    #- script: 'echo ${{ EC2_SSH_KEY}} > flask/xyz.pem && chmod 600 xyz.pem'
-    #  displayName: 'Create SSH Key File'
+    - script: |
+       echo ${{ EC2_SSH_KEY}} > flask/xyz.pem 
+       chmod 600 xyz.pem'
+      displayName: 'Create SSH Key File'
 
     - script: |
         ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
