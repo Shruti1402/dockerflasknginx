@@ -37,7 +37,7 @@ stages:
         DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
 
   
-    - task: Docker@2
+    - task: CmdLine@2
       displayName: 'Push the Docker image to Dockerhub'
       inputs:
         containerregistrytype: 'Docker Hub'
