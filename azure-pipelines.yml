@@ -32,7 +32,7 @@ stages:
         dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
         ImageName: '$(ImageName)'
         buildContext: '$(Build.SourcesDirectory)/app.py'
-        repository: $(DOCKER_REPOSITORY_NAME)
+        repository: '$(DOCKER_REPOSITORY_NAME)'
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
@@ -46,7 +46,7 @@ stages:
         containerRegistry: 'dockerRegistryServiceConnection'
         command: 'Push an image'
         ImageName: '$(ImageName)'
-        DOCKER_REPOSITORY_NAME: 'my-flask-app-new'
+        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
