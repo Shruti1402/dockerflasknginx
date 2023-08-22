@@ -104,7 +104,9 @@ stages:
       displayName: 'Set up Python 3.x'
 
     - script: |
+        pip install --upgrade pip
         pip install aws-cli
+
       displayName: 'Install Aws CLI'
 
     - script: |
@@ -120,6 +122,3 @@ stages:
 #      docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
       displayName: 'Pull and run Docker image'
 
-  #- script: |
-      # Add any additional commands needed for your deployment
-  #  displayName: 'Additional deployment steps'
