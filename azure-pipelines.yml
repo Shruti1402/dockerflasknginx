@@ -96,5 +96,5 @@ stages:
         ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo    docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
       displayName: 'Pull and Run Docker Image on EC2'
       env:
-        EC2_SSH_KEY: $(AppSecrets.EC2_SSH_KEY)
+        EC2_SSH_KEY: $(EC2_SSH_KEY)
         USERNAME: ubuntu	
