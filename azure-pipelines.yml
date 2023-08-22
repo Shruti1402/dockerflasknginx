@@ -92,7 +92,7 @@ stages:
      #   displayName: 'Login to Docker Hub on EC2'
 
     - script: |
-        #echo '${{EC2_SSH_KEY}}' > flask/xyz.pem 
+        #echo '${{EC2_SSH_KEY}}' > xyz.pem 
         #chmod 600 xyz.pem'
         ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
         ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new || true'
