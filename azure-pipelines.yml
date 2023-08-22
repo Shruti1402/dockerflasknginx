@@ -62,7 +62,7 @@ stages:
         EC2_SSH_KEY: $(EC2_SSH_KEY)
         USERNAME: ubuntu
         HOST_DNS: $(HOST_DNS)
-      script: |
+    -  script: |
         sudo docker login
         sudo docker pull shruti1402/my-flask-app-new:latest
         sudo docker stop flask_img_new
