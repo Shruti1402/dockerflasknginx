@@ -107,10 +107,15 @@ stages:
         sudo apt update -y 
         sudo apt install awscli
 
-      displayName: 'Install Aws CLI'
+      displayName: 'Install Aws CLI' 
+    - script: |
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        aws configure set region us-east-1
+      displayName: 'Configure AWS Credentials'
 
     - script: |
-        sudo ssh -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP) -y
+        sudo ssh -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP) 
 #      aws login --service-principal -u $(AZURE_SP_ID) -p $(AZURE_SP_SECRET) --tenant $(AZURE_SP_TENANT)
 #      aws login --name shruti1402
       displayName: 'Log in to Aws ec2'
