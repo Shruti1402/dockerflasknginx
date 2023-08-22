@@ -75,21 +75,14 @@ stages:
 
 
   - job: DeployFlaskAppToEC2
+    deployment: DeployJob
+    environment: 'test'
     steps:
     - task: UsePythonVersion@0
       inputs:
         versionSpec: '3.x'
         addToPath: true
       displayName: 'Use Python 3.x'
-
-    #- script: |
-        
-        
-     # displayName: 'Create SSH Key File'
-
-    #- script: |
-        
-     #   displayName: 'Login to Docker Hub on EC2'
 
     - script: |
         cd /flask
