@@ -85,7 +85,7 @@ stages:
       displayName: 'Use Python 3.x'
 
     - script: |
-        cd /flask
+        pwd
         ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
         ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new '
         ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker rm my-flask-app-new '
