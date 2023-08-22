@@ -61,6 +61,9 @@ stages:
         command: 'Pull an image'
         imageName: '$(ImageName)'
         DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+        EC2_SSH_KEY: '$(EC2_SSH_KEY)'
+        USERNAME: ubuntu
+        HOST_DNS: '$(HOST_DNS)'
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
