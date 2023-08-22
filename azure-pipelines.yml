@@ -13,6 +13,45 @@ variables:
 pr:
 - "*"
 stages:
+
+- stage: Build
+  jobs:
+  - deployment: DeployJob
+    environment: 'test'
+  - job: BuildJob
+    pool:
+      vmImage: ubuntu-latest
+
+    steps:
+    - task: Docker@1
+      displayName: 'Build the Docker image'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Build an image'
+        dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
+        ImageName: '$(ImageName)'
+        buildContext: '$(Build.SourcesDirectory)/app.py'
+        repository: '$(DOCKER_REPOSITORY_NAME)'
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+
+  
+    - task: Docker@1
+      displayName: 'Push the Docker image to Dockerhub'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        ImageName: '$(ImageName)'
+        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+
 - stage: Deploy
   displayName: Deploy to EC2
   jobs:
