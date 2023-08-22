@@ -13,45 +13,19 @@ variables:
 pr:
 - "*"
 
-
 stages:
-- stage: Build
+- stage: Deploy
+  displayName: Deploy to EC2
   jobs:
-  - deployment: DeployJob
-    environment: 'test'
-  - job: BuildJob
-    pool:
-      vmImage: ubuntu-latest
-
+  - job: Deploy
+    displayName: Deploy to EC2
     steps:
-    - task: Docker@1
-      displayName: 'Build the Docker image'
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'Docker Hub'
-        command: 'Build an image'
-        dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
-        ImageName: '$(ImageName)'
-        buildContext: '$(Build.SourcesDirectory)/app.py'
-        repository: '$(DOCKER_REPOSITORY_NAME)'
-      env:
-        DOCKER_USERNAME: $(DOCKER_USERNAME)
-        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+    - script: 
+#        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+#        chmod 600 ~/.ssh/id_rsa
+        ssh -o "StrictHostKeyChecking no" -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP "docker login; docker pull $(ImageName); docker run -d -p 8080:8000 $(ImageName)"
+      displayName: 'SSH into EC2 and Pull Docker Image'
 
-  
-    - task: Docker@1
-      displayName: 'Push the Docker image to Dockerhub'
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'Docker Hub'
-        command: 'Push an image'
-        ImageName: '$(ImageName)'
-        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
-      env:
-        DOCKER_USERNAME: $(DOCKER_USERNAME)
-        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
     
         
 #    - task: Docker@1 
@@ -81,15 +55,5 @@ stages:
       #  sudo docker run -d --name flask_img_new -p 8000:8000 $(ImageName)
 
 
-- stage: Deploy
-  displayName: Deploy to EC2
-  jobs:
-  - job: Deploy
-    displayName: Deploy to EC2
-    steps:
-    - script: 
-        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh -o "StrictHostKeyChecking no" -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP "docker login; docker pull $(ImageName); docker run -d -p 8080:8000 $(ImageName)"
-      displayName: 'SSH into EC2 and Pull Docker Image'
+
   
