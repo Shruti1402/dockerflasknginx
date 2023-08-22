@@ -53,33 +53,56 @@ stages:
         DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
     
         
-    - task: CmdLine@2 
-      displayName: 'Pull the Docker image from Dockerhub'
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'Docker Hub'
-        command: 'Pull an image'
-        imageName: '$(ImageName)'
-        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
-        EC2_SSH_KEY: '$(EC2_SSH_KEY)'
-        USERNAME: ubuntu
-        HOST_DNS: '$(HOST_DNS)'
-      env:
-        DOCKER_USERNAME: $(DOCKER_USERNAME)
-        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-        EC2_SSH_KEY: $(EC2_SSH_KEY)
-        USERNAME: ubuntu
-        HOST_DNS: $(HOST_DNS)
-        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
-    - script: |
-        sudo docker login
-        sudo docker pull $(ImageName)
-        sudo docker stop flask_img_new
-        sudo docker rm flask_img_new
-        sudo docker run -d --name flask_img_new -p 8000:8000 $(ImageName)
+  #  - task: CmdLine@2 
+  #    displayName: 'Pull the Docker image from Dockerhub'
+  #    inputs:
+  #     containerregistrytype: 'Container Registry'
+  #     dockerRegistryEndpoint: 'Docker Hub'
+  #      command: 'Pull an image'
+  #      imageName: '$(ImageName)'
+  #      DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+  #      EC2_SSH_KEY: '$(EC2_SSH_KEY)'
+  #      USERNAME: ubuntu
+  #      HOST_DNS: '$(HOST_DNS)'
+  #    env:
+  #      DOCKER_USERNAME: $(DOCKER_USERNAME)
+  #      DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+  #      EC2_SSH_KEY: $(EC2_SSH_KEY)
+  #      USERNAME: ubuntu
+  #      HOST_DNS: $(HOST_DNS)
+  #      DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+  #  - script: |
+  #      sudo docker login
+  #      sudo docker pull $(ImageName)
+  #      sudo docker stop flask_img_new
+  #      sudo docker rm flask_img_new
+  #      sudo docker run -d --name flask_img_new -p 8000:8000 $(ImageName)
 
-        
+  - job: Deploy        
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+      versionSpec: '3.x'  # Use the appropriate Python version
+
+    - script: |
+        EC2_PUBLIC_IP="$(EC2_PUBLIC_IP)"	
+        ImageName="$(ImageName)"
+        SSH_PRIVATE_KEY="$(EC2_SSH_KEY)"
     
+   
+        mkdir -p ~/.ssh
+        echo "$EC2_SSH_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+    
+    
+        ssh -o "StrictHostKeyChecking no" -i ~/.ssh/id_rsa ubuntu@$EC2_PUBLIC_IP "docker login; docker pull $ImageName"
+      env:
+        SSH_PRIVATE_KEY: $(EC2_SSH_KEY)
+        displayName: 'Pull Docker Image on EC2'
+ 
 
 
 
