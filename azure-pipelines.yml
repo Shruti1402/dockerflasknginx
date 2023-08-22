@@ -104,6 +104,7 @@ stages:
       displayName: 'Set up Python 3.x'
 
     - script: |
+        sudo apt update -y 
         sudo apt install awscli
 
       displayName: 'Install Aws CLI'
