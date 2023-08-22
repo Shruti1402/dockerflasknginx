@@ -74,26 +74,23 @@ stages:
 
 
 
-  #- job: DeployFlaskAppToEC2
-  #  steps:
-  #  - task: UsePythonVersion@0
-  #    inputs:
-  #      versionSpec: '3.x'
-  #      addToPath: true
-  #    displayName: 'Use Python 3.x'
+  - job: DeployFlaskAppToEC2
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
+      displayName: 'Use Python 3.x'
 
-  #  - script: |
-  #      cd $(Build.SourcesDirectory)/flask  
-  #      echo "$EC2_SSH_KEY" > $(Build.BuildDirectory)/flask/xyz.pem
-  #     chmod 600 $(Build.BuildDirectory)/flask/xyz.pem
-  #     ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new '
-  #      ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker rm my-flask-app-new '
-  #      ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker pull shruti1402/my-flask-app-new:latest'
-  #      ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo    docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
-  #    displayName: 'Pull and Run Docker Image on EC2'
-  #    env:
-  #     EC2_SSH_KEY: $(EC2_SSH_KEY)
-  #      USERNAME: ubuntu
-  #     HOST_DNS: $(HOST_DNS)
-  #      DOCKER_USERNAME: $(DOCKER_USERNAME)
-  #      DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+    - script: ssh -i $(EC2_SSH_KEY) $(USERNAME)@$(HOST_DNS) 'ls'
+        #ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new '
+        #ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker rm my-flask-app-new '
+        #ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker pull shruti1402/my-flask-app-new:latest'
+        #ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo    docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
+      displayName: 'Pull and Run Docker Image on EC2'
+      env:
+        EC2_SSH_KEY: $(EC2_SSH_KEY)
+        USERNAME: ubuntu
+        HOST_DNS: $(HOST_DNS)
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
