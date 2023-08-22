@@ -76,7 +76,7 @@ stages:
 
   - job: DeployFlaskAppToEC2
     steps:
-    - task: UsePythonVersion@0
+    - task: CmdLine@2 
       inputs:
         versionSpec: '3.x'
         addToPath: true
