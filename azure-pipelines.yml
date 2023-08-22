@@ -14,6 +14,8 @@ pr:
 stages:
 - stage: Build
   jobs:
+  - deployment: DeployJob
+    environment: 'test'
   - job: BuildJob
     pool:
       vmImage: ubuntu-latest
@@ -75,8 +77,6 @@ stages:
 
 
   - job: DeployFlaskAppToEC2
-    deployment: DeployJob
-    environment: 'test'
     steps:
     - task: UsePythonVersion@0
       inputs:
