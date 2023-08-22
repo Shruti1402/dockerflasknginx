@@ -93,7 +93,7 @@ stages:
 #      displayName: 'SSH into EC2 and Pull Docker Image'
   
   - job: Deploy
-  dependsOn: BuildJob
+    dependsOn: BuildJob
     steps:
     - checkout: self
 
