@@ -89,11 +89,12 @@ stages:
         cd ../..
         ls 
         pwd
-        ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
-        ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new '
-        ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker rm my-flask-app-new '
-        ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker pull shruti1402/my-flask-app-new:latest'
-        ssh -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo    docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
+        cd /home/ubuntu/flask
+        ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
+        ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new '
+        ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker rm my-flask-app-new '
+        ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo docker pull shruti1402/my-flask-app-new:latest'
+        ssh -i $(EC2_SSH_KEY) ubuntu@52.73.82.30 'sudo    docker run -d --name my-flask-app-new -p 8000:8000 shruti1402/my-flask-app-new:latest'
       displayName: 'Pull and Run Docker Image on EC2'
       env:
         EC2_SSH_KEY: $(New variable group.EC2_SSH_KEY)
