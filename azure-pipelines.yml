@@ -100,5 +100,5 @@ stages:
       env:
         SSH_PRIVATE_KEY: $(EC2_SSH_KEY)
         displayName: 'Pull Docker Image on EC2'
-        EC2_PUBLIC_IP: "$(EC2_PUBLIC_IP)"	
+        EC2_PUBLIC_IP: '$(EC2_PUBLIC_IP)'
         ImageName: '$(ImageName)'
