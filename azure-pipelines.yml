@@ -92,6 +92,7 @@ stages:
      #   displayName: 'Login to Docker Hub on EC2'
 
     - script: |
+        cd /flask
         ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker login -u shruti1402 -p Shruti@1402'
         ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker stop my-flask-app-new || true'
         ssh -o StrictHostKeyChecking=no -i $EC2_SSH_KEY ubuntu@52.73.82.30 'sudo docker rm my-flask-app-new || true'
