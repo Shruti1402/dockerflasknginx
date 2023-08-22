@@ -71,7 +71,7 @@ stages:
         USERNAME: ubuntu
         HOST_DNS: $(HOST_DNS)
         DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
-    -  script: |
+    - script: |
         sudo docker login
         sudo docker pull $(ImageName)
         sudo docker stop flask_img_new
