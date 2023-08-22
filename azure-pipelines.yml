@@ -34,6 +34,7 @@ stages:
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
 
   
     - task: Docker@2
@@ -47,6 +48,12 @@ stages:
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+    - script: |
+        sudo docker login
+        cd /flask
+        docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
+        docker push shruti1402/my-flask-app-new:latest
         
     - task: CmdLine@2 
       displayName: 'Pull the Docker image from Dockerhub'
@@ -62,6 +69,7 @@ stages:
         EC2_SSH_KEY: $(EC2_SSH_KEY)
         USERNAME: ubuntu
         HOST_DNS: $(HOST_DNS)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
     -  script: |
         sudo docker login
         sudo docker pull shruti1402/my-flask-app-new:latest
