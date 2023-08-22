@@ -85,7 +85,7 @@ stages:
     steps:
     - task: UsePythonVersion@0
       inputs:
-      versionSpec: '3.x'  # Use the appropriate Python version
+        versionSpec: '3.x'  # Use the appropriate Python version
 
     - script: |
         EC2_PUBLIC_IP="$(EC2_PUBLIC_IP)"	
