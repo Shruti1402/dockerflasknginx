@@ -80,45 +80,45 @@ stages:
       #  sudo docker run -d --name flask_img_new -p 8000:8000 $(ImageName)
 
 
-- stage: Deploy
-  displayName: Deploy to EC2
-  jobs:
-  - job: Deploy
-    displayName: Deploy to EC2
-    steps:
-    - script: 
+#- stage: Deploy
+#  displayName: Deploy to EC2
+#  jobs:
+#  - job: Deploy
+#    displayName: Deploy to EC2
+#    steps:
+#    - script: 
 #        echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
 #        chmod 600 ~/.ssh/id_rsa
-        ssh -o "StrictHostKeyChecking no" -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP "docker login; docker pull $(ImageName); docker run -d -p 8080:8000 $(ImageName)"
-      displayName: 'SSH into EC2 and Pull Docker Image'
+#        ssh -o "StrictHostKeyChecking no" -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP "docker login; docker pull $(ImageName); docker run -d -p 8080:8000 $(ImageName)"
+#      displayName: 'SSH into EC2 and Pull Docker Image'
   
   - job: Deploy
   dependsOn: BuildJob
-  steps:
-  - checkout: self
+    steps:
+    - checkout: self
 
-  - task: UsePythonVersion@0
-    inputs:
-      versionSpec: '3.x'
-      addToPath: true
-    displayName: 'Set up Python 3.x'
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.x'
+        addToPath: true
+      displayName: 'Set up Python 3.x'
 
-  - script: |
-      pip install aws-cli
-    displayName: 'Install Aws CLI'
+    - script: |
+        pip install aws-cli
+      displayName: 'Install Aws CLI'
 
-  - script: |
-       sudo ssh -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP) -y
+    - script: |
+        sudo ssh -i $(SSH_PRIVATE_KEY) ubuntu@$EC2_PUBLIC_IP) -y
 #      aws login --service-principal -u $(AZURE_SP_ID) -p $(AZURE_SP_SECRET) --tenant $(AZURE_SP_TENANT)
 #      aws login --name shruti1402
-    displayName: 'Log in to Aws ec2'
+      displayName: 'Log in to Aws ec2'
 
-  - script: |
-      docker pull $(ImageName)
+    - script: |
+        docker pull $(ImageName)
 #      docker stop flask_img_new
 #      docker rm flask_img_new
 #      docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
-    displayName: 'Pull and run Docker image'
+      displayName: 'Pull and run Docker image'
 
   #- script: |
       # Add any additional commands needed for your deployment
