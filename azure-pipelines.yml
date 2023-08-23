@@ -86,7 +86,7 @@ stages:
     - script: 
         sudo docker login 
         sudo docker images
-        sudo docker pull shruti1402/my-flask-app-new175:latest"
+        sudo docker pull shruti1402/my-flask-app-new175:latest
 #        echo "$SSH_PRIVATE_KEY" > private_key.pem
 #        chmod 600 private_key.pem
 #        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
