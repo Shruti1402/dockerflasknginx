@@ -82,6 +82,7 @@ stages:
 
     - script: |
         ls -al
+        ssh-keygen -R hostname
         sudo ssh -tt -i xyz.pem ubuntu@$(EC2_PUBLIC_IP) 
       displayName: 'Log in to Aws ec2'
 
