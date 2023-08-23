@@ -82,13 +82,16 @@ stages:
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
         DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
     - script: 
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
-        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
-        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
-        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
-        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "docker pull shruti1402/my-flask-app-new175:latest"
-        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker run -d -p 8000:8000 shruti1402/my-flask-app-new175:latest"
+        sudo docker login 
+        sudo docker images
+        sudo docker pull shruti1402/my-flask-app-new175:latest"
+#        echo "$SSH_PRIVATE_KEY" > private_key.pem
+#        chmod 600 private_key.pem
+#        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
+#        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
+#        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
+#        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "docker pull shruti1402/my-flask-app-new175:latest"
+#        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker run -d -p 8000:8000 shruti1402/my-flask-app-new175:latest"
       displayName: 'SSH into EC2 and Pull Docker Image'
 
     
