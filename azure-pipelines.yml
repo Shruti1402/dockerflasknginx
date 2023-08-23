@@ -71,7 +71,9 @@ stages:
         command: 'Run a Docker command'
         ImageName: '$(ImageName)'
         tags: latest
+        dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
         DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+        repository: '$(DOCKER_REPOSITORY_NAME)'
         EC2_SSH_KEY: '$(EC2_SSH_KEY)'
         USERNAME: ubuntu
         HOST_DNS: '$(HOST_DNS)'
