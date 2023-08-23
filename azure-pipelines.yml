@@ -96,35 +96,42 @@ stages:
 
     
         
-#    - task: Docker@1 
-#      displayName: 'Pull the Docker image from Dockerhub'
+#  - job: Deploy
+#    dependsOn: BuildJob
+#    steps:
+#    - checkout: self
+
+#    - task: UsePythonVersion@0
 #      inputs:
-#        containerregistrytype: 'Container Registry'
-#        dockerRegistryEndpoint: 'Docker Hub'
-#        command: 'Pull an image'
-#        ImageName: '$(ImageName)'
-#        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
-#       EC2_SSH_KEY: '$(EC2_SSH_KEY)'
-#        USERNAME: ubuntu
-#        HOST_DNS: '$(HOST_DNS)'
-#        EC2_PUBLIC_IP: '$(EC2_PUBLIC_IP)'
-#        SSH_PRIVATE_KEY: '$(SSH_PRIVATE_KEY)'
-#      env:
-##        DOCKER_USERNAME: $(DOCKER_USERNAME)
-#        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-#        EC2_SSH_KEY: $(EC2_SSH_KEY)
-#        USERNAME: ubuntu
-#        HOST_DNS: $(HOST_DNS)
-#        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+#        versionSpec: '3.x'
+#        addToPath: true
+#      displayName: 'Set up Python 3.x'
+
 #    - script: |
-#        echo "$SSH_PRIVATE_KEY" > private_key.pem
-#        chmod 600 private_key.pem
-#        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
-##        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
-#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
-#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker pull $ImageName"
-#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker run -d -p 8000:8000 $ImageName"
-#      displayName: 'SSH into EC2 and Pull Docker Image'
+#        sudo apt update -y 
+#        sudo apt install awscli
+
+#      displayName: 'Install Aws CLI' 
+#    - script: |
+#        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+#       aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+#        aws configure set region us-east-1
+#      displayName: 'Configure AWS Credentials'
+
+#    - script: |
+#      aws s3 ls
+#        sudo ssh -i $(EC2_SSH_KEY) ubuntu@$(EC2_PUBLIC_IP) 
+#      aws login --service-principal -u $(AZURE_SP_ID) -p $(AZURE_SP_SECRET) --tenant $(AZURE_SP_TENANT)
+#      aws login --name shruti1402
+#      displayName: 'Log in to Aws ec2'
+
+#    - script: |
+#        docker pull $(ImageName)
+#      docker stop flask_img_new
+#      docker rm flask_img_new
+#      docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
+#      displayName: 'Pull and run Docker image'
+
 
 
 
