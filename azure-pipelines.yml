@@ -64,9 +64,9 @@ stages:
     steps:
     - task: Docker@1
     - script: 
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
-        chmod 600 private_key.pem
-        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
+#        echo "$SSH_PRIVATE_KEY" > private_key.pem
+#        chmod 600 private_key.pem
+#        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
         sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
         sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker pull $ImageName"
