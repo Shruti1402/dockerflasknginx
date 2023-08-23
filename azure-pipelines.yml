@@ -57,6 +57,16 @@ stages:
   jobs:
   - job: Deploy
     displayName: Deploy to EC2
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: 'Docker Hub'
+      command: 'Deploy'
+      ImageName: '$(ImageName)'
+      DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+    env:
+      DOCKER_USERNAME: $(DOCKER_USERNAME)
+      DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+      DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
     steps:
     - script: 
         echo "${SSH_PRIVATE_KEY}"
