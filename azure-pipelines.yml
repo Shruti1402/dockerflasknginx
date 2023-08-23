@@ -108,7 +108,7 @@ stages:
       inputs:
         sshEndpoint: 'ssh connection'
         runOptions: Inline Script
-        commands: sudo ssh -tt -i $(SSH_PRIVATE_KEY) ubuntu@$(EC2_PUBLIC_IP)
+        commands: aws s3 ls
         readyTimeout: '20000'
 #    - script: |
 #        docker pull $(ImageName)
