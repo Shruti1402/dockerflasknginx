@@ -94,7 +94,7 @@ stages:
 
     - task: SSH@0
       inputs:
-        sshEndpoint: 'ssh connection'  # Name of your SSH service connection
+        sshEndpoint: 'AWS connection'  # Name of your SSH service connection
         runOptions: 'commands'
         commands: |
           sudo ssh -tt -i $PrivateKeyFilePath ubuntu@$(EC2_PUBLIC_IP)'aws s3 ls'
