@@ -80,17 +80,28 @@ stages:
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set region us-east-1
       displayName: 'Configure AWS Credentials'
-
-    - task: AWSCLI@1
+    
+    - task: InstallSSHKey@0
+      displayName: 'Install an SSH key'
       inputs:
-        awsCredentials: 'AWS connection'
-        regionName: 'us-east-1'
+        knownHostsEntry: 'SHA256:1Hyr55tsxGifESBMc0s+2NtutnR/4+LOkVwrOGrIp8U johndoe@contoso'
+        sshPublicKey: '$(SSH_PRIVATE_KEY)'
+#        sshKeySecureFile: '$(id_rsa)'
+        configHostname: EC2 
     - script: |
-        ls -al
-        cd .ssh
-        ssh-keygen -R hostname
-        sudo ssh -tt -i xyz.pem ubuntu@$(EC2_PUBLIC_IP) 
-      displayName: 'Log in to Aws ec2'
+        ls -al 
+        sudo ssh -tt -i $(SSH_PRIVATE_KEY) ubuntu@$(EC2_PUBLIC_IP)
+      displayName: 'login to AWS EC2'
+#    - task: AWSCLI@1
+#      inputs:
+#        awsCredentials: 'AWS connection'
+#        regionName: 'us-east-1'
+#    - script: |
+#        ls -al
+#        cd .ssh
+#        ssh-keygen -R hostname
+#        sudo ssh -tt -i xyz.pem ubuntu@$(EC2_PUBLIC_IP) 
+#      displayName: 'Log in to Aws ec2'
 
     - script: |
         docker pull $(ImageName)
