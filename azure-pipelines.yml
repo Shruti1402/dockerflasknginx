@@ -91,6 +91,7 @@ stages:
 
     - task: InstallSSHKey@0
       inputs:
+        knownHostsEntry: 'ubuntu'
         sshPublicKey: ''  # Leave this blank since you're using a service connection
         sshKeySecureFile: 'ssh connection'  # Name of the SSH service connection
 #        sshPassphrase: 'your-passphrase'  # If your private key is encrypted
