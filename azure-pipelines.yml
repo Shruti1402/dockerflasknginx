@@ -67,6 +67,7 @@ stages:
       inputs:
         versionSpec: '3.x'
         addToPath: true
+        AWS: AWS 
       displayName: 'Set up Python 3.x'
 
     - script: |
@@ -80,6 +81,10 @@ stages:
         aws configure set region us-east-1
       displayName: 'Configure AWS Credentials'
 
+    - task: AWSCLI@1
+      inputs:
+        awsCredentials: 'awsServiceConnection'
+        regionName: 'us-east-1'
     - script: |
         ls -al
         cd .ssh
