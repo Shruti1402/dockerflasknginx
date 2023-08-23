@@ -81,18 +81,18 @@ stages:
         aws configure set region us-east-1
       displayName: 'Configure AWS Credentials'
     
-    - task: InstallSSHKey@0
-      displayName: 'Install an SSH key'
-      inputs:
-        knownHostsEntry: ''
+#    - task: InstallSSHKey@0
+#      displayName: 'Install an SSH key'
+#      inputs:
+#        knownHostsEntry: ''
 #        sshPublicKey: '$(SSH_PRIVATE_KEY)'
-        sshKeySecureFile: xyz.pem
-        configHostname: EC2
+#        sshKeySecureFile: xyz.pem
+#        configHostname: EC2
          
-    - script: |
-        ls -al 
-        sudo ssh -tt -i xyz.pem ubuntu@$(EC2_PUBLIC_IP)
-      displayName: 'login to AWS EC2'
+#    - script: |
+#        ls -al 
+#        sudo ssh -tt -i xyz.pem ubuntu@$(EC2_PUBLIC_IP)
+#      displayName: 'login to AWS EC2'
 #    - task: AWSCLI@1
 #      inputs:
 #        awsCredentials: 'AWS connection'
@@ -104,12 +104,18 @@ stages:
 #        sudo ssh -tt -i xyz.pem ubuntu@$(EC2_PUBLIC_IP) 
 #      displayName: 'Log in to Aws ec2'
 
-    - script: |
-        docker pull $(ImageName)
-        docker stop flask_img_new
-        docker rm flask_img_new
-        docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
-      displayName: 'Pull and run Docker image'
+    - task: SSH@0
+      inputs:
+        sshEndpoint: 'ssh connection'
+        runOptions: Inline Script
+        commands: sudo ssh -tt -i $(SSH_PRIVATE_KEY) ubuntu@$(EC2_PUBLIC_IP)
+        readyTimeout: '20000'
+#    - script: |
+#        docker pull $(ImageName)
+#        docker stop flask_img_new
+#        docker rm flask_img_new
+#        docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
+#      displayName: 'Pull and run Docker image'
 
 
 
