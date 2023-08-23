@@ -82,7 +82,7 @@ stages:
 
     - script: |
         ls -al
-        sudo ssh -i $(EC2_SSH_KEY) ubuntu@$(EC2_PUBLIC_IP) 
+        sudo ssh -i xyz.pem ubuntu@$(EC2_PUBLIC_IP) 
       displayName: 'Log in to Aws ec2'
 
     - script: |
