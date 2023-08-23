@@ -89,7 +89,7 @@ stages:
         sudo docker pull shruti1402/my-flask-app-new175:latest
         echo "$EC2_SSH_KEY" > private_key.pem
         ls -al
-        sudo chmod 600 private_key.pem
+        sudo chmod 777 private_key.pem
         sudo scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
         sudo ssh -i private_key.pem ubuntu@$EC2_PUBLIC_IP "aws s3 ls"
         
