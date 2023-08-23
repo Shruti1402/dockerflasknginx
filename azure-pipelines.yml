@@ -97,7 +97,7 @@ stages:
         sshEndpoint: 'ssh connection'  # Name of your SSH service connection
         runOptions: 'commands'
         commands: |
-          sudo ssh -tt -i $PrivateKeyFilePath ubuntu@$(EC2_PUBLIC_IP)'aws s3 ls'
+          sudo ssh -tt -i $PrivateKeyFilePath ubuntu@$(EC2_PUBLIC_IP) 'aws s3 ls'
       env:
         PrivateKeyFilePath: $(Agent.TARGET_DIR)/$(SSH_PUBLIC_KEY)
         EC2_PUBLIC_IP: '52.73.82.30'
