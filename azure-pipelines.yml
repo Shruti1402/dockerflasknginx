@@ -86,12 +86,12 @@ stages:
       inputs:
         knownHostsEntry: ''
 #        sshPublicKey: '$(SSH_PRIVATE_KEY)'
-        sshKeySecureFile: cd .ssh/'$(SSH_PRIVATE_KEY)'
+        sshKeySecureFile: xyz.pem
         configHostname: EC2
          
     - script: |
         ls -al 
-        sudo ssh -tt -i $(SSH_PRIVATE_KEY) ubuntu@$(EC2_PUBLIC_IP)
+        sudo ssh -tt -i xyz.pem ubuntu@$(EC2_PUBLIC_IP)
       displayName: 'login to AWS EC2'
 #    - task: AWSCLI@1
 #      inputs:
