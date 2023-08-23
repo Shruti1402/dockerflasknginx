@@ -83,7 +83,7 @@ stages:
 
     - task: AWSCLI@1
       inputs:
-        awsCredentials: 'awsServiceConnection'
+        awsCredentials: 'AWS connection'
         regionName: 'us-east-1'
     - script: |
         ls -al
