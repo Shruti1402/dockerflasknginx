@@ -83,7 +83,7 @@ stages:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
         DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
-    - script: 
+    - script: |
         sudo docker login 
         sudo docker images
         sudo docker pull shruti1402/my-flask-app-new175:latest
