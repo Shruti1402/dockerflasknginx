@@ -52,52 +52,52 @@ stages:
         DOCKER_PASSWORD: $(DOCKER_PASSWORD)
         DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
 
-#- stage: Deploy
-#  displayName: Deploy to EC2
-#  jobs:
-#  - job: Deploy
-#    displayName: Deploy to EC2
-#    steps:
-#    - script: 
-#        echo "$SSH_PRIVATE_KEY" > private_key.pem
-#        chmod 600 private_key.pem
-#        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
-#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
-#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
-#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker pull $ImageName"
-#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker run -d -p 8000:8000 $ImageName"
-#      displayName: 'SSH into EC2 and Pull Docker Image'
-
-    
-        
-    - task: Docker@1 
-      displayName: 'Pull the Docker image from Dockerhub'
-      inputs:
-        containerregistrytype: 'Container Registry'
-        dockerRegistryEndpoint: 'Docker Hub'
-#        command: 'Pull an image'
-        ImageName: '$(ImageName)'
-        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
-        EC2_SSH_KEY: '$(EC2_SSH_KEY)'
-        USERNAME: ubuntu
-        HOST_DNS: '$(HOST_DNS)'
-        EC2_PUBLIC_IP: '$(EC2_PUBLIC_IP)'
-        SSH_PRIVATE_KEY: '$(SSH_PRIVATE_KEY)'
-      env:
-        DOCKER_USERNAME: $(DOCKER_USERNAME)
-        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-        EC2_SSH_KEY: $(EC2_SSH_KEY)
-        USERNAME: ubuntu
-        HOST_DNS: $(HOST_DNS)
-        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
-    - script: |
+- stage: Deploy
+  displayName: Deploy to EC2
+  jobs:
+  - job: Deploy
+    displayName: Deploy to EC2
+    steps:
+    - script: 
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
         scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
-        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
-        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
+        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
+        sudo ssh -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker pull $ImageName"
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker run -d -p 8000:8000 $ImageName"
+      displayName: 'SSH into EC2 and Pull Docker Image'
+
+    
+        
+#    - task: Docker@1 
+#      displayName: 'Pull the Docker image from Dockerhub'
+#      inputs:
+#        containerregistrytype: 'Container Registry'
+#        dockerRegistryEndpoint: 'Docker Hub'
+#        command: 'Pull an image'
+#        ImageName: '$(ImageName)'
+#        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+#       EC2_SSH_KEY: '$(EC2_SSH_KEY)'
+#        USERNAME: ubuntu
+#        HOST_DNS: '$(HOST_DNS)'
+#        EC2_PUBLIC_IP: '$(EC2_PUBLIC_IP)'
+#        SSH_PRIVATE_KEY: '$(SSH_PRIVATE_KEY)'
+#      env:
+##        DOCKER_USERNAME: $(DOCKER_USERNAME)
+#        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+#        EC2_SSH_KEY: $(EC2_SSH_KEY)
+#        USERNAME: ubuntu
+#        HOST_DNS: $(HOST_DNS)
+#        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+#    - script: |
+#        echo "$SSH_PRIVATE_KEY" > private_key.pem
+#        chmod 600 private_key.pem
+#        scp -o "StrictHostKeyChecking no" -i private_key.pem Dockerfile ubuntu@$EC2_PUBLIC_IP:~/Dockerfile
+##        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker login"
+#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker images"
+#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker pull $ImageName"
+#        ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker run -d -p 8000:8000 $ImageName"
 #      displayName: 'SSH into EC2 and Pull Docker Image'
 
 
