@@ -86,7 +86,7 @@ stages:
       inputs:
         knownHostsEntry: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCaPuyhFCP/+adx7QFh+l/EY73EAWYb9tIMJZ5mtDFdLApycDHCLhvWd+mFFUxKmo4b9wyCTr9V4kPjy23knSa3D/wR9Qabtvh317YhGPFu9azz5C7EvQDYc2BJvglsFe17x7fi5tw82X5CsKDnCfnOSxKNMfSXGVLQh+W+5tfI7vkEupr4UehH3NI85cRzM5++EAv2gVYn/BW81dE/YLAQGKGsTzM1J/fsADEPt5MtqSy5fdHQdQ9w7aljl73Y+PqQJNHoF7ACyV73C/XBSjC0hlylzYtYeAZW5TdXXurBVgCmt5fYywlDL56ot65rx96drKAGLm0JQ62ryBF/NuiFiVrVMdBqV+Y+JITe1fgrLEEcJRueRnFqMsRQg7i0txWx3Yqk+sliLqvywINlEhFk8bR/cilvv5tTw+p20maUiZ6Toqq/dy4KvihfEtAMM/h/v7+7wDhaKb2Tov4Evn9voMJa3Bm5UX8PNiBRUl1JdJt5QIuD/DzGZtUyxpYRpNk= ubuntu@ip-10-0-13-94'
         sshPublicKey: '$(id_rsa)'
-        sshKeySecureFile: id_rsa
+        sshKeySecureFile: /id_rsa
 #        configHostname: EC2
     - bash: ssh -tt -i $id_rsa ubuntu@52.73.82.30
 
