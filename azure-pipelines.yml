@@ -86,7 +86,7 @@ stages:
       inputs:
         knownHostsEntry: 'SHA256:1Hyr55tsxGifESBMc0s+2NtutnR/4+LOkVwrOGrIp8U johndoe@contoso'
 #        sshPublicKey: '$(SSH_PRIVATE_KEY)'
-        sshKeySecureFile: '$(id_rsa)'
+        sshKeySecureFile: '$(SSH_PRIVATE_KEY)'
         configHostname: EC2 
     - script: |
         ls -al 
