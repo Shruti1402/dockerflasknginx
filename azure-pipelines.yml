@@ -96,7 +96,7 @@ stages:
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set region us-east-1
-        sudo ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@52.73.82.30
+        sudo ssh -tt -o StrictHostKeyChecking=no -i private_key.pem ubuntu@52.73.82.30
         
 
       displayName: 'SSH into EC2 and Pull Docker Image'
