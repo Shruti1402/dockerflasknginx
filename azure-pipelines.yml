@@ -75,7 +75,7 @@ stages:
       inputs:
         containerregistrytype: 'Container Registry'
         dockerRegistryEndpoint: 'Docker Hub'
-        command: 'Pull'
+        command: 'Pull an image'
         ImageName: '$(ImageName)'
         DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
         EC2_SSH_KEY: '$(EC2_SSH_KEY)'
