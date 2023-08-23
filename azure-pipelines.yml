@@ -57,16 +57,6 @@ stages:
   jobs:
   - job: Deploy
     displayName: Deploy to EC2
-    inputs:
-      containerregistrytype: 'Container Registry'
-      dockerRegistryEndpoint: 'Docker Hub'
-      command: 'Deploy'
-      ImageName: '$(ImageName)'
-      DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
-    env:
-      DOCKER_USERNAME: $(DOCKER_USERNAME)
-      DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-      DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
     steps:
     - script: 
         echo "${SSH_PRIVATE_KEY}"
@@ -75,6 +65,16 @@ stages:
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker pull $ImageName"
         ssh -o "StrictHostKeyChecking no" -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "sudo docker run -d -p 8000:8000 $ImageName"
       displayName: 'SSH into EC2 and Pull Docker Image'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Deploy'
+        ImageName: '$(ImageName)'
+        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
 
     
         
