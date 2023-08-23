@@ -85,8 +85,8 @@ stages:
       displayName: 'Install an SSH key'
       inputs:
         knownHostsEntry: 'SHA256:1Hyr55tsxGifESBMc0s+2NtutnR/4+LOkVwrOGrIp8U johndoe@contoso'
-        sshPublicKey: '$(SSH_PRIVATE_KEY)'
-#        sshKeySecureFile: '$(id_rsa)'
+#        sshPublicKey: '$(SSH_PRIVATE_KEY)'
+        sshKeySecureFile: '$(id_rsa)'
         configHostname: EC2 
     - script: |
         ls -al 
