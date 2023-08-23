@@ -55,11 +55,14 @@ stages:
 - stage: Deploy
   displayName: Deploy to EC2
   jobs:
+  - deployment: DeployJob
+    environment: 'test'
   - job: Deploy
     pool:
       vmImage: ubuntu-latest
     displayName: Deploy to EC2
     steps:
+    - task: Docker@1
     - script: 
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
