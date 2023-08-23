@@ -97,7 +97,7 @@ stages:
         sshEndpoint: 'ssh connection'  # Name of your SSH service connection
         runOptions: 'commands'
         commands: |
-          docker pull shruti1402/my-flask-app-new175:latest
+          sudo docker pull shruti1402/my-flask-app-new175:latest
       env:
         PrivateKeyFilePath: $(Agent.TARGET_DIR)/$(SSH_PUBLIC_KEY)
         EC2_PUBLIC_IP: '52.73.82.30'
