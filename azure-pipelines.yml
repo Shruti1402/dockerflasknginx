@@ -88,8 +88,8 @@ stages:
         sudo docker images
         sudo docker pull shruti1402/my-flask-app-new175:latest
         ls -al
-        sudo chmod 777 xyz.pem
-        sudo ssh -i xyz.pem ubuntu@$EC2_PUBLIC_IP "aws s3 ls"
+        sudo chmod 777 $(SSH_PRIVATE_KEY)
+        sudo ssh -o StrictHostKeyChecking=no -i $SSH_PRIVATE_KEY ubuntu@$EC2_PUBLIC_IP "aws s3 ls"
         
 
       displayName: 'SSH into EC2 and Pull Docker Image'
