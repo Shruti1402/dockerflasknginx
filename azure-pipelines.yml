@@ -56,6 +56,8 @@ stages:
   displayName: Deploy to EC2
   jobs:
   - job: Deploy
+    pool:
+      vmImage: ubuntu-latest
     displayName: Deploy to EC2
     steps:
     - script: 
