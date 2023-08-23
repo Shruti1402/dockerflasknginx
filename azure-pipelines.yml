@@ -89,12 +89,12 @@ stages:
         sudo docker pull shruti1402/my-flask-app-new175:latest
         echo "$SSH_PRIVATE_KEY" > private_key.pem
         sudo chmod 777 private_key.pem
-        cd /.ssh
+        cd .ssh
         ls -al
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
         aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
         aws configure set region us-east-1
-#        sudo ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@52.73.82.30 "aws s3 ls"
+        sudo ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@52.73.82.30 "aws s3 ls"
         
 
       displayName: 'SSH into EC2 and Pull Docker Image'
