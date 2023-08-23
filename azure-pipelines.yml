@@ -81,7 +81,7 @@ stages:
       displayName: 'Configure AWS Credentials'
 
     - script: |
-        aws s3 ls
+        ls -al
         sudo ssh -i $(EC2_SSH_KEY) ubuntu@$(EC2_PUBLIC_IP) 
       displayName: 'Log in to Aws ec2'
 
