@@ -18,48 +18,48 @@ stages:
   jobs:
   - deployment: DeployJob
     environment: 'test'
-#  - job: BuildJob
-#    pool:
-#      vmImage: ubuntu-latest
+  - job: BuildJob
+    pool:
+      vmImage: ubuntu-latest
 
-#    steps:
-#    - task: Docker@1
-#      displayName: 'Build the Docker image'
-#      inputs:
-#        containerregistrytype: 'Container Registry'
-#        dockerRegistryEndpoint: 'Docker Hub'
-#        command: 'Build an image'
-#        dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
-#        ImageName: '$(ImageName)'
-#        tags: latest
-#        buildContext: '$(Build.SourcesDirectory)/app.py'
-#        repository: '$(DOCKER_REPOSITORY_NAME)'
-#      env:
-#        DOCKER_USERNAME: $(DOCKER_USERNAME)
-#        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-#        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+    steps:
+    - task: Docker@1
+      displayName: 'Build the Docker image'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Build an image'
+        dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
+        ImageName: '$(ImageName)'
+        tags: latest
+        buildContext: '$(Build.SourcesDirectory)/app.py'
+        repository: '$(DOCKER_REPOSITORY_NAME)'
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
 
   
-#    - task: Docker@1
-#      displayName: 'Push the Docker image to Dockerhub'
-#      inputs:
-#        containerregistrytype: 'Container Registry'
-#        dockerRegistryEndpoint: 'Docker Hub'
-#        command: 'Push an image'
-#        ImageName: '$(ImageName)'
-#        tags: latest
-#        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
-#      env:
-#        DOCKER_USERNAME: $(DOCKER_USERNAME)
-#        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
-#        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
+    - task: Docker@1
+      displayName: 'Push the Docker image to Dockerhub'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        ImageName: '$(ImageName)'
+        tags: latest
+        DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
+      env:
+        DOCKER_USERNAME: $(DOCKER_USERNAME)
+        DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+        DOCKER_REPOSITORY_NAME: $(DOCKER_REPOSITORY_NAME)
 
 
 
     
         
   - job: Deploy
-    #dependsOn: BuildJob
+    dependsOn: BuildJob
     steps:
     - checkout: self
 
@@ -75,11 +75,11 @@ stages:
 #        sudo apt install awscli
 #      displayName: 'Install Aws CLI' 
 
-    - script: |
-        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-        aws configure set region us-east-1
-      displayName: 'Configure AWS Credentials'
+#    - script: |
+#        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+#        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+#        aws configure set region us-east-1
+#      displayName: 'Configure AWS Credentials'
     
 #    - task: InstallSSHKey@0
 #      displayName: 'Install an SSH key'
