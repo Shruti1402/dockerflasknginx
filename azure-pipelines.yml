@@ -86,7 +86,7 @@ stages:
       inputs:
         knownHostsEntry: ''
 #        sshPublicKey: '$(SSH_PRIVATE_KEY)'
-        sshKeySecureFile: '$(SSH_PRIVATE_KEY)'
+        sshKeySecureFile: cd .ssh/'$(SSH_PRIVATE_KEY)'
         configHostname: EC2
          
     - script: |
