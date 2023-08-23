@@ -88,7 +88,7 @@ stages:
         sudo docker images
         sudo docker pull shruti1402/my-flask-app-new175:latest
         cd .ssh
-        echo "$SSH_PRIVATE_KEY" > private_key.pem
+        echo "$EC2_SSH_KEY" > private_key.pem
         sudo chmod 777 private_key.pem
         sudo chmod 777 authorized_keys
         sudo chmod 777 known_hosts
