@@ -28,7 +28,7 @@ stages:
         command: 'Build an image'
         dockerFile: '$(Build.SourcesDirectory)/flask/Dockerfile'
         ImageName: '$(ImageName)'
-        tags: latest
+        tags: new
         buildContext: '$(Build.SourcesDirectory)/app.py'
         repository: '$(DOCKER_REPOSITORY_NAME)'
       env:
@@ -44,7 +44,7 @@ stages:
         dockerRegistryEndpoint: 'Docker Hub'
         command: 'Push an image'
         ImageName: '$(ImageName)'
-        tags: latest
+        tags: new
         DOCKER_REPOSITORY_NAME: '$(DOCKER_REPOSITORY_NAME)'
       env:
         DOCKER_USERNAME: $(DOCKER_USERNAME)
@@ -94,10 +94,10 @@ stages:
         sshEndpoint: 'ssh connection'  # Name of your SSH service connection
         runOptions: 'commands'
         commands: |
-          sudo docker pull shruti1402/my-flask-app-new175:latest
+          sudo docker pull shruti1402/shruti1402/my-flask-app123:new
           sudo docker stop my-flask-app
           sudo docker rm -f my-flask-app
-          sudo docker run -d --name my-flask-app -p 8000:8000 shruti1402/my-flask-app-new175:latest
+          sudo docker run -d --name my-flask-app -p 8000:8000 shruti1402/my-flask-app123:latest
 
 
 #    - script: |
