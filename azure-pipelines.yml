@@ -6,12 +6,9 @@ resources:
 
 variables:
 - group: Docker
-#  ImageName: 'shruti1402/my-flask-app-new175'
-#variables:
-#  tag: '$(Build.BuildId)'
 
-pr:
-- "*"
+#pr:
+#- "*"
 stages:
 
 - stage: Build
