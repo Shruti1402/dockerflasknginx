@@ -97,7 +97,7 @@ stages:
           sudo docker pull shruti1402/my-flask-app123:new
           sudo docker stop my-flask-app
           sudo docker rm -f my-flask-app
-          sudo docker run -d --name my-flask-app -p 8000:8000 shruti1402/my-flask-app123:latest
+          sudo docker run -d --name my-flask-app -p 8000:8000 shruti1402/my-flask-app123:new
 
 
 #    - script: |
