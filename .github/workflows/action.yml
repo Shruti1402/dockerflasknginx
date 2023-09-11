@@ -110,7 +110,7 @@ jobs:
         run: mkdir artifacts
 
       - name: Copy artifact from container
-        run: docker cp flask_img_new:/usr/src/app ./artifacts/
+        run: docker cp flask_img_new:/usr/src/app/app.py ./artifacts/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
