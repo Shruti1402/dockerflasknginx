@@ -50,7 +50,7 @@ jobs:
       - name: upload artifact
         uses: actions/upload-artifact@v3
         with:
-          path: /flask/Dockerfile 
+          path: flask
           
       
      # - name: Set up Python 3.7
