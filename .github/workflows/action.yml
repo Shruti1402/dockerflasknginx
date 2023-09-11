@@ -38,7 +38,7 @@ jobs:
           host: ${{ secrets.HOST_DNS }}
           username: admin0
           key:  ${{ secrets.EC2_SSH_KEY }}
-         envs: GITHUB_ENV
+          envs: GITHUB_ENV
           script: |
             sudo docker login
             sudo docker pull shruti1402/my-flask-app-new:latest
