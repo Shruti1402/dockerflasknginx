@@ -32,25 +32,25 @@ jobs:
           docker tag my-flask-app-new shruti1402/my-flask-app-new:latest
           docker push shruti1402/my-flask-app-new:latest
 
-      - name: Pull docker images
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.HOST_DNS }}
-          username: admin0
+ #     - name: Pull docker images
+ #       uses: appleboy/ssh-action@master
+ #       with:
+ #         host: ${{ secrets.HOST_DNS }}
+ #         username: admin0
  #         key:  ${{ secrets.EC2_SSH_KEY }}
-          envs: GITHUB_ENV
-          script: |
-            sudo docker login
-            sudo docker pull shruti1402/my-flask-app-new:latest
-            sudo docker stop flask_img_new
-            sudo docker rm flask_img_new
-            sudo docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
+ #         envs: GITHUB_ENV
+ #         script: |
+ #           sudo docker login
+ #           sudo docker pull shruti1402/my-flask-app-new:latest
+ #           sudo docker stop flask_img_new
+ #           sudo docker rm flask_img_new
+ #           sudo docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
       - name: check path 
         run: ls 
-      - name: upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          path: flask/Dockerfile
+  #    - name: upload artifact
+  #      uses: actions/upload-artifact@v3
+  #      with:
+  #        path: flask/Dockerfile
           
       
      # - name: Set up Python 3.7
