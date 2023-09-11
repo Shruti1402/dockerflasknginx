@@ -45,6 +45,10 @@ jobs:
             sudo docker stop flask_img_new
             sudo docker rm flask_img_new
             sudo docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: /flask/Dockerfile 
           
       
      # - name: Set up Python 3.7
