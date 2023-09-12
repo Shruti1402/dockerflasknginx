@@ -101,25 +101,38 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Download Docker image
-        run: sudo docker pull shruti1402/my-flask-app-new:latest
+        run: |
+          sudo docker pull shruti1402/my-flask-app-new:latest
+          sudo docker pull shruti1402/my-flask-app123:latest
 
       - name: Run Docker container
         run: |
           sudo docker run -d --name flask_img_new -p 8000:8000 shruti1402/my-flask-app-new
-          sudo docker exec -i flask_img_new touch xyz.text &&  pwd && ls
+          sudo docker run -d --name flask_img -p 8080:8080 shruti1402/my-flask-app123
+       #   sudo docker exec -i flask_img_new touch xyz.text &&  pwd && ls
          
                             
       - name: Create artifact directory
-        run: mkdir artifacts
+        run: |
+          mkdir artifacts 
+          mkdir artifact2
 
       - name: Copy artifact from container
-        run: docker cp flask_img_new:/usr/src/app/ ./artifacts/
+        run: |
+          docker cp flask_img_new:/usr/src/app/ ./artifacts/
+          docker cp flask_img:/usr/src/app/ ./artifact2/
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
           path: artifacts/
+
+      - name: Upload artifact2
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact2
+          path: artifact2/
    
      
  
